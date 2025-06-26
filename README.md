@@ -23,7 +23,6 @@
 16. [Roadmap](#roadmap)  
 17. [Contributing](#contributing)  
 18. [License](#license)  
-19. [Acknowledgements & Further Reading](#acknowledgements--further-reading)
 
 ---
 
@@ -32,6 +31,15 @@
 There are too many orchestration tools, agents, recipes, scripts, hacks for the modern agentic development(agent-dev?) world. You must crawl 30 tweet long threads, reddit, try things on your own and frankstein the steps into your python/javascript/etc jerry-rigged codebase. It's not reproducible and worse there's no way to easily share them, keep track of them, version them, see what worked best/rollback/branch etc. What if there was a better way?
 
 ---
+
+## Assumptions
+
+It's naive to think orchestration will remain static, even possibly within the same agentic session. In one moment a critic-generator-discriminator may make sense and in another it may require a commitee (different areas of the "genome" are read)
+
+Much like genes its lossy/some fidelity loss during transcription/translation as LLMs can be constrained but won't be entirely deterministic. The goal is to reduce the "misfolded" proteins and ensure the system is self healing.
+
+De novo mutations in each generation optionally (can increase the "fuzz" - stochastic temp per generation) which is adaptive/useful to get out of genetic local minima. 
+
 
 ## Key Concepts
 
@@ -247,3 +255,6 @@ See ROADMAP.md.
 
 ## Contributing
 PRs welcome! See CONTRIBUTING.md for code style and how to add new protein (agent) types or memory adapters.
+
+## License
+Apache 2.0 – see LICENSE.
