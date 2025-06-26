@@ -30,11 +30,15 @@
 
 There are too many orchestration tools, agents, recipes, scripts, hacks for the modern agentic development(agent-dev?) world. You must crawl 30 tweet long threads, reddit, try things on your own and frankstein the steps into your python/javascript/etc jerry-rigged codebase. It's not reproducible and worse there's no way to easily share them, keep track of them, version them, see what worked best/rollback/branch etc. What if there was a better way?
 
+## Solution 
+
+The name is a play on [LUCA](https://en.wikipedia.org/wiki/Last_universal_common_ancestor), the last universal common ancestor from which all life diverged. Our DNA is shared across the planet reaching back to this archaic form of life after billions of years of genetic evolution, recombination, and untold dead ends. This blueprint is 
+
 ---
 
 ## Assumptions
 
-It's naive to think orchestration will remain static, even possibly within the same agentic session. In one moment a critic-generator-discriminator may make sense and in another it may require a commitee (different areas of the "genome" are read)
+It's naive to think orchestration will remain static, even possibly within the same agentic session. In one moment a critic-generator-discriminator may make sense and in another it may require a commitee (different areas of the "genome" are read). Additionally during the very same process it is being called, it can update its own orchestration calls if it sees there is a better way of doing things. It provides intent not deterministic outcomes (these can be RL'd of course)
 
 Much like genes its lossy/some fidelity loss during transcription/translation as LLMs can be constrained but won't be entirely deterministic. The goal is to reduce the "misfolded" proteins and ensure the system is self healing.
 
