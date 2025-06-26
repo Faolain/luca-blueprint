@@ -178,6 +178,80 @@ Schema (v0.1)
 
 Full JSON Schema lives in /schema/blueprint-0.1.schema.json.
 
+### Prompts
+
+Recommended places to store / reference prompt templates
+| Use-case                                              | Where to put the template                                                                     | How agents point to it                           | Pros                                                                                                | Cons                                                    |
+| ----------------------------------------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| **Small, single-use prompt**                          | Inline in the **agent** block (`prompt` field)                                                | `"prompt": "You are a polite JSON validator …"`  | • Self-contained<br>• Easiest to copy-paste                                                         | • Bulks up the JSON<br>• Harder to diff across versions |
+| **Reusable prompt shared by many agents**             | Top-level **`prompts`** section; each entry has an `id` and `content`                         | `"prompt_id": "summarise_v1"`                    | • DRY; one canonical copy<br>• Easy GA mutations (swap IDs)<br>• Version prompts separately         | • Extra dereference step at runtime                     |
+| **Large or formatted prompt (Jinja, Markdown, etc.)** | External file in `/prompts/…` folder or separate CID; agent stores a **relative path or CID** | `"prompt_template": "./prompts/summarise.jinja"` | • Keeps blueprint tidy<br>• Syntax-highlighting in IDEs<br>• Can pin file on IPFS & sign separately | • Need to bundle or fetch file when executing           |
+
+1 · Inline prompt (quick prototypes)
+```{
+  "agents": [
+    {
+      "id": "llm_inline",
+      "type": "openai",
+      "model": "gpt-4o-mini",
+      "prompt": "You are an expert proof-reader. Rewrite {{text}} with perfect grammar.",
+      "tools": []
+    }
+  ]
+}
+```
+2 · Central prompts registry (recommended for most projects)
+```{
+  "prompts": {
+    "summarise_v1": {
+      "format": "jinja2",
+      "content": "Write a concise summary of the following article:\n\n{{article}}\n\n-- END --"
+    },
+    "critic_v1": {
+      "format": "jinja2",
+      "content": "{% include 'critic_base.jinja' %}"
+    }
+  },
+
+  "agents": [
+    {
+      "id": "llm_main",
+      "type": "openai",
+      "model": "gpt-4o-mini",
+      "prompt_id": "summarise_v1",
+      "tools": ["web-search"]
+    },
+    {
+      "id": "critic",
+      "type": "openai",
+      "model": "gpt-4o-mini",
+      "prompt_id": "critic_v1"
+    }
+  ]
+}
+```
+GA mutation tip:
+Your genetic operator can swap prompt_ids or splice new ones into the prompts map while leaving the rest of the genome unchanged.
+
+3 · External template (best for large / multi-file prompts)
+```
+{
+  "agents": [
+    {
+      "id": "llm_main",
+      "type": "openai",
+      "model": "gpt-4o-mini",
+      "prompt_template": "./prompts/summarise.jinja"
+    }
+  ]
+}
+```
+When you sign & push, include the prompts/ directory in the CAR file or upload each template to IPFS and reference its CID:
+```
+"prompt_cid": "bafybeigd.../summarise.jinja"
+```
+
+
 ## Epigenetic Layer
 
 ```yaml
@@ -190,6 +264,24 @@ memory:
     url: "http://qdrant.prod.internal:6333"
 ```
 Parsed before execution; never changes core genome.
+
+### Epigenetic overrides for prompts
+Need to A/B a new prompt without touching the core genome?
+
+```yaml
+# config.abtest.yml
+prompts:
+  critic_v1:
+    content: "Provide STRICTLY bullet-point feedback on {{text}}."
+```
+At runtime `luca run --config config.abtest.yml` … will shadow the original critic_v1 prompt for that environment only.
+
+**Summary checklist**
+- Prototype fast? → inline prompt in the agent.
+- Multiple agents share? → top-level prompts map + prompt_id references.
+- Big / complex prompt? → external file path or IPFS CID via prompt_template / prompt_cid.
+- Need environment-specific tweaks? → override in config.*.yml (epigenetics).
+
 
 ## Installation & Quick-Start
 ```bash
