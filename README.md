@@ -30,6 +30,12 @@
 
 There are too many orchestration tools, agents, recipes, scripts, hacks for the modern agentic development(agent-dev?) world. You must crawl 30 tweet long threads, reddit, try things on your own and frankstein the steps into your python/javascript/etc jerry-rigged codebase. It's not reproducible and worse there's no way to easily share them, keep track of them, version them, see what worked best/rollback/branch etc. What if there was a better way?
 
+## Requirements
+
+- Reproducibility - The blueprint should have everything it needs to run, aka it should be completely self describing and as long as it's put into another "cellular nucleus" it should be able to run. In other words in the future an LLM should be able to read the Luca-Blueprint and launch everything it needs. 
+- Proof of Provenance - You should know the entire chain of branches of how this blueprint came to be. 
+- Recombination - You should be able to "hybridize" blueprints aka mix 2 or n different blueprints to try out different evolutionary strategies. Children of the same parent blueprints can look different and that's the idea.
+
 ## Solution 
 
 The name is a play on [LUCA](https://en.wikipedia.org/wiki/Last_universal_common_ancestor), the last universal common ancestor from which all life diverged. 
