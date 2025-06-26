@@ -32,7 +32,9 @@ There are too many orchestration tools, agents, recipes, scripts, hacks for the 
 
 ## Solution 
 
-The name is a play on [LUCA](https://en.wikipedia.org/wiki/Last_universal_common_ancestor), the last universal common ancestor from which all life diverged. Our DNA is shared across the planet reaching back to this archaic form of life after billions of years of genetic evolution, recombination, and untold dead ends. This blueprint is 
+The name is a play on [LUCA](https://en.wikipedia.org/wiki/Last_universal_common_ancestor), the last universal common ancestor from which all life diverged. 
+![alt text](image.png)
+Our DNA is shared across the planet reaching back to this archaic form of life after billions of years of genetic evolution, recombination, and untold dead ends. This blueprint is 
 
 ---
 
